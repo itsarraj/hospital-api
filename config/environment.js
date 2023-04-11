@@ -3,6 +3,7 @@ const development = {
     asset_path: './assets',
     port_number: 8000,
     db: 'hospital_api_development',
+    viewEngine: 'ejs',
 };
 const production = {
     name: 'production',
