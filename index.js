@@ -35,7 +35,31 @@ app.use('/', require('./routes/index.js'));
 app.set('view engine', env.viewEngine);
 app.set('views', './views');
 
-app.use;
+app.use(
+    session({
+        name: 'Hospital-Api',
+        secret: env.session_cookie_key,
+        saveUninitialized: false,
+        resave: false,
+        cookie: {
+            maxAge: 1000 * 60 * 10, // 10 minutes
+        },
+        // this will store the session in db
+        store: MongoStore.create(
+            {
+                mongoUrl: `mongodb://127.0.0.1/${db}`,
+                mongooseConnection: db,
+                autoRemove: 'disabled',
+            },
+            function (error) {
+                console.log(
+                    `Error ( ./index.js ).(app.use(session) : Error in saving session in db || ` +
+                        error
+                );
+            }
+        ),
+    })
+);
 
 app.listen(port, function (error) {
     if (error) {
