@@ -4,7 +4,7 @@ const development = {
     port_number: 8000,
     db: 'hospital_api_development',
     viewEngine: 'ejs',
-    session_cookie_key: 'xxadsadcsasadfsdfsdfsdfsdfsdfsdfsdfsdfsdf', // TODO: Change this before production
+    session_cookie_key: 'abcd', // TODO: Change this before production
 };
 const production = {
     name: 'production',

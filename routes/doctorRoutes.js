@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 // controllers imports
 const doctorsController = require('../controllers/doctorController');
@@ -11,6 +12,12 @@ router.post(
     doctorsController.registerDoctorProfile
 );
 router.get('/login', doctorsController.login);
-router.get('/create-session', doctorsController.createSession);
+router.post(
+    '/create-session',
+    passport.authenticate('local', {
+        failureRedirect: '/login',
+    }),
+    doctorsController.createSession
+);
 
 module.exports = router;

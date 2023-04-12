@@ -1,15 +1,17 @@
 const express = require('express');
+const session = require('express-session');
+
 const app = express();
 const env = require('./config/environment.js');
 
 const port = env.port_number;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose.js');
-const session = require('express-session');
+// const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy.js');
-const passportJWT = require('./config/passport-jwt-strategy.js');
+// const passportJWT = require('./config/passport-jwt-strategy.js');
 const MongoStore = require('connect-mongo');
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -63,6 +65,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
 
 app.listen(port, function (error) {
     if (error) {
