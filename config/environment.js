@@ -5,6 +5,8 @@ const development = {
     db: 'hospital_api_development',
     viewEngine: 'ejs',
     session_cookie_key: 'abcd', // TODO: Change this before production
+    jwt_secret: 'abcd', // TODO: Change this before production
+    url_name: 'www.hospitalapi.com',
 };
 const production = {
     name: 'production',
