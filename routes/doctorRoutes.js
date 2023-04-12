@@ -11,5 +11,6 @@ router.post(
     doctorsController.registerDoctorProfile
 );
 router.get('/login', doctorsController.login);
+router.get('/create-session', doctorsController.createSession);
 
 module.exports = router;

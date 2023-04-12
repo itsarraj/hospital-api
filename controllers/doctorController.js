@@ -63,3 +63,14 @@ module.exports.register = function (req, res) {
         );
     }
 };
+
+module.exports.createSession = function (req, res) {
+    try {
+        return res.render('doctors_register');
+    } catch (error) {
+        console.log(
+            'Error ( doctorsController ).(module.exports.login) : Error in login doctor || ' +
+                error
+        );
+    }
+};

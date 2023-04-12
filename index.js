@@ -7,12 +7,12 @@ const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose.js');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-// const passport = require('passport');
-// const passportLocal = require('./config/passport-local-strategy.js');
-// const passportJWT = require('./config/passport-jwt-strategy.js');
-
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy.js');
+const passportJWT = require('./config/passport-jwt-strategy.js');
+const MongoStore = require('connect-mongo');
 const path = require('path');
-const notie = require('notie');
+const bcrypt = require('bcrypt');
 
 // Models importing
 const Doctor = require('./models/Doctor.js');
@@ -47,7 +47,7 @@ app.use(
         // this will store the session in db
         store: MongoStore.create(
             {
-                mongoUrl: `mongodb://127.0.0.1/${db}`,
+                mongoUrl: `mongodb://127.0.0.1/${env.db}`,
                 mongooseConnection: db,
                 autoRemove: 'disabled',
             },
@@ -60,6 +60,9 @@ app.use(
         ),
     })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.listen(port, function (error) {
     if (error) {
