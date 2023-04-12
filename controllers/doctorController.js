@@ -6,7 +6,7 @@ module.exports.registerDoctorProfile = async function (req, res) {
 
         // if password does not match the confirm password
         if (req.body.password != req.body.confirmpassword) {
-
+        }
 
         if (doctor) {
             // if username is already registered
