@@ -11,7 +11,7 @@ const passport = require('passport');
 const passportJWT = require('./config/passport-jwt-strategy.js');
 const MongoStore = require('connect-mongo');
 const path = require('path');
-
+const jwt = require('jsonwebtoken');
 // Models importing
 const Doctor = require('./models/Doctor.js');
 const Patient = require('./models/Patient.js');
