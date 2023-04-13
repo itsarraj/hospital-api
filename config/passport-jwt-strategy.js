@@ -4,6 +4,7 @@ const ExtractJWT = require('passport-jwt').ExtractJwt;
 const env = require('./environment');
 
 const Doctor = require('../models/Doctor');
+const Patient = require('../models/Patient');
 
 let options = {};
 options.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
@@ -20,12 +21,7 @@ passport.use(
             } else {
                 return done(null, false);
             }
-        } catch (error) {
-            console.log(
-                'Error ( /config/passport-jwt-strategy.js ).( passport.use(new JWTStrategy()  )) : Error in Authentication || ' +
-                    error
-            );
-        }
+        } catch (error) {}
     })
 );
 

@@ -1,17 +1,22 @@
 const express = require('express');
-const session = require('express-session');
-
 const app = express();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
 const env = require('./config/environment.js');
 
+const session = require('express-session');
 const port = env.port_number;
 const db = require('./config/mongoose.js');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const passportJWT = require('./config/passport-jwt-strategy.js');
+const passportLocal = require('./config/passport-local-strategy.js');
+
 const MongoStore = require('connect-mongo');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+
 // Models importing
 const Doctor = require('./models/Doctor.js');
 const Patient = require('./models/Patient.js');
