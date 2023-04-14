@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const env = require('../config/environment');
 
 module.exports.register = async function (req, res) {
-    //Check if all field enter
     // Check if all fields are entered
+    console.log(req.body);
     if (
         req.body.username == undefined ||
         req.body.name == undefined ||
@@ -14,25 +14,9 @@ module.exports.register = async function (req, res) {
             message: 'Incomplete data provided',
         });
     }
+    let doctor = await Doctor.findOne({ username: req.body.username }).exec();
 
-    let doctor = await Doctor.find({ username: req.body.username }).exec();
-    doctor = JSON.stringify(doctor);
-    console.log(doctor);
-
-    if (doctor === []) {
-        return res.status(200).json({
-            message: 'Doctor already registered',
-            data: {
-                doctor: {
-                    username: req.body.username,
-                    // name: doctor.name,
-                },
-            },
-        });
-    }
-
-    // if doctor does not exist create a new one
-    if (doctor === []) {
+    if (!doctor) {
         doctor = await Doctor.create({
             username: req.body.username,
             password: req.body.password,
@@ -45,29 +29,42 @@ module.exports.register = async function (req, res) {
                 doctor: doctor,
             },
         });
+    } else {
+        doctor.password = 'Not authorized';
+        return res.status(200).json({
+            message: 'Doctor already registered',
+            data: {
+                doctor: doctor,
+            },
+        });
     }
-    // console.log(
-    //     'Error (doctorsController).(module.exports.register): Error in registering doctor || ' +
-    //         error
-    // );
-    // return res.status(500).json({ message: 'Internal server error' });
 };
 
 module.exports.login = async function (req, res) {
-    passport.authenticate('jwt', { session: false }, (err, doctor, info) => {
-        if (err) {
-            return res.status(500).json({ message: 'Internal server error' });
+    if (req.body.username == undefined || req.body.password == undefined) {
+        return res.status(206).json({
+            message: 'Incomplete data provided',
+        });
+    }
+    try {
+        let doctor = await Doctor.find({ username: req.body.username }).exec();
+        if (doctor) {
+            if (req.body.password == doctor.password) {
+                let token = await jwt.sign(doctor.toJSON(), env.jwt_secret, {
+                    expiresIn: '600000',
+                });
+                return res.status(200).json({
+                    data: {
+                        token:
+                    },
+                });
+            }
+        } else {
+            return res.status(401).json({
+                message: 'Invalid credentials',
+            });
         }
-        if (!doctor) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
-        // Generate JWT token
-        const token = jwt.sign({ id: doctor._id }, 'your-secret-key', {
-            expiresIn: '1h',
-        }); // Replace with your own secret key
-
-        // Return JWT token to client
-        return res.status(200).json({ token });
-    })(req, res, next);
+    } catch (err) {
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 };
