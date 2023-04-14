@@ -4,7 +4,7 @@ const env = require('../config/environment');
 
 module.exports.register = async function (req, res) {
     // Check if all fields are entered
-    console.log(req.body);
+
     if (
         req.body.username == undefined ||
         req.body.name == undefined ||
@@ -14,8 +14,8 @@ module.exports.register = async function (req, res) {
             message: 'Incomplete data provided',
         });
     }
-    let doctor = await Doctor.findOne({ username: req.body.username }).exec();
 
+    let doctor = await Doctor.findOne({ username: req.body.username }).exec();
     if (!doctor) {
         doctor = await Doctor.create({
             username: req.body.username,
@@ -47,16 +47,29 @@ module.exports.login = async function (req, res) {
         });
     }
     try {
-        let doctor = await Doctor.find({ username: req.body.username }).exec();
-        if (doctor) {
-            if (req.body.password == doctor.password) {
+        let doctor = await Doctor.findOne({
+            username: req.body.username,
+        }).exec();
+        if (doctor != null) {
+            if (req.body.password === doctor.password) {
+                console.log('5');
+
                 let token = await jwt.sign(doctor.toJSON(), env.jwt_secret, {
                     expiresIn: '600000',
                 });
+
                 return res.status(200).json({
                     data: {
-                        token:
+                        token: token,
                     },
+                });
+            } else if (req.body.username != doctor.username) {
+                return res.status(401).json({
+                    message: 'Invalid Username',
+                });
+            } else {
+                return res.status(401).json({
+                    message: 'Invalid Password',
                 });
             }
         } else {
