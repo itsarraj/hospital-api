@@ -52,13 +52,14 @@ module.exports.login = async function (req, res) {
         }).exec();
         if (doctor != null) {
             if (req.body.password === doctor.password) {
-                console.log('5');
-
                 let token = await jwt.sign(doctor.toJSON(), env.jwt_secret, {
-                    expiresIn: '600000',
+                    expiresIn: '1h',
                 });
 
                 return res.status(200).json({
+                    doctor: {
+                        id: doctor.id,
+                    },
                     data: {
                         token: token,
                     },

@@ -5,7 +5,6 @@ const router = express.Router();
 const reportController = require('../controllers/reportController');
 // router for api routers
 
-router.get('/:status', reportController.register);
-
+router.get('/:status', reportController.fetchReportsByStatus);
 
 module.exports = router;
