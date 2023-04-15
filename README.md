@@ -76,3 +76,29 @@ node app.js
     1: 'Travelled-Quarantine',
     2: 'Symptoms-Quarantine',
     3: 'Positive-Admit',
+
+## Screensorts Example of API 
+
+-   POST /doctors/register - Create a new doctors registration
+
+![](/images/doctors-register.png)
+
+-   POST /doctors/login - Login to the doctors
+
+![](/images/.JPG)
+
+-   POST /patients/register - Register the patients
+
+![](/images/.JPG)
+
+-   POST /patients/:id/create-report - Create a new Patient Report by Patient ID
+
+![](/images/.JPG)
+
+-   GET /patients/:id/all_reports - give the patients a list of all reports by Patient ID
+
+![](/images/.JPG)
+
+-   GET /patients/:status - give the list of reports by status
+
+![](/images/.JPG)
