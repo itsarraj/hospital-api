@@ -4,11 +4,6 @@ This is a Node.js application for managing patients in a hospital or healthcare 
 
 ## Features
 
--   Register new patients with name, age, gender, contact number, and address
--   View patient details including name, age, gender, contact number, and address
--   Update patient details
--   Delete patient records
-
 There are two types of users in the system: Doctors and Patients.
 
 #### Doctors
