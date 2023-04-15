@@ -87,17 +87,17 @@ node app.js
 
 ![](/images/doctors-login.png)
 
--   POST /patients/register - Register the patients
+-   POST /patient/register - Register the patients
 
-![](/images/patients-register.png)
+![](/images/patient-register.png)
 
 -   POST /patients/:id/create-report - Create a new Patient Report by Patient ID
 
-![](/images/patients-id-create-report.png)
+![](/images/patient-id-create-report.png)
 
 -   GET /patients/:id/all_reports - give the patients a list of all reports by Patient ID
 
-![](/images/patients-id-all-report.png)
+![](/images/patient-id-all-reports.png)
 
 -   GET /patients/:status - give the list of reports by status
 
